@@ -1,6 +1,6 @@
 def odds(rating_a, rating_b):
     power = (rating_b - rating_a) / 400
-    print('power: ' + str(power))
+    # print('power: ' + str(power))
     return 1.0/(1 + 10**power)
 
 
@@ -15,10 +15,10 @@ and a player with rating_b with result equals score"""
     # print test
     k = calculate_k(rating_a)
     odd = odds(rating_a, rating_b)
-    print('rating a: ' + str(rating_a))
-    print('rating b: ' + str(rating_b))
-    print('k: ' + str(k))
-    print('odds: ' + str(odd))
+    # print('rating a: ' + str(rating_a))
+    # print('rating b: ' + str(rating_b))
+    # print('k: ' + str(k))
+    # print('odds: ' + str(odd))
     return rating_a + k * (score - odd)
 
 

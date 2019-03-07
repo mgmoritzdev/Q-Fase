@@ -1,96 +1,66 @@
 # from elo import compare
 from player import Player
 from team import Team
+from random import random
+from math import floor
 
 
 p1 = Player('Marcos')
-p2 = Player('Raoni')
-p3 = Player('Renato')
-p4 = Player('Caio')
-p5 = Player('Altamir')
-p6 = Player('Mickael')
-p7 = Player('Felipe')
-t1 = Team('t', [p1, p2, p3])
+p2 = Player('Maradona')
+p3 = Player('Raoni')
+p4 = Player('Renato')
+p5 = Player('Álvaro')
+p6 = Player('Caio')
+p7 = Player('Daniel')
+p8 = Player('Michael')
+p9 = Player('Diogo')
+p10 = Player('Marcelo')
+p11 = Player('Junior')
+p12 = Player('Silvio')
+p13 = Player('Fernandes')
+p14 = Player('Reinaldo')
+p15 = Player('Adauto')
+p16 = Player('Sandro')
 
-p5.compare_defense(p1, 1)
-p2.compare_defense(p3, 1)
-p2.compare_defense(p1, 1)
-p7.compare_defense(p1, 1)
-p6.compare_defense(p6, 1)
-p5.compare_defense(p6, 1)
-p3.compare_defense(p4, 1)
-p4.compare_defense(p3, 1)
-p1.compare_defense(p5, 1)
-p6.compare_defense(p7, 1)
-p3.compare_defense(p7, 1)
-p2.compare_defense(p3, 1)
-p2.compare_defense(p4, 1)
-p2.compare_defense(p7, 1)
-p6.compare_defense(p5, 1)
-p4.compare_defense(p6, 1)
-p5.compare_defense(p6, 1)
-p3.compare_defense(p4, 1)
-p1.compare_defense(p3, 1)
-p4.compare_defense(p1, 1)
-p1.compare_defense(p3, 1)
-p2.compare_defense(p4, 1)
-p6.compare_defense(p4, 1)
-p4.compare_defense(p2, 1)
-p6.compare_defense(p7, 1)
-p2.compare_defense(p2, 1)
-p7.compare_defense(p5, 1)
-p6.compare_defense(p6, 1)
-p7.compare_defense(p6, 1)
-p3.compare_defense(p1, 1)
-p2.compare_defense(p7, 1)
-p7.compare_defense(p3, 1)
-p6.compare_defense(p3, 1)
-p4.compare_defense(p3, 1)
-p2.compare_defense(p6, 1)
-p2.compare_defense(p6, 1)
-p4.compare_defense(p4, 1)
-p2.compare_defense(p1, 1)
-p3.compare_defense(p3, 1)
-p2.compare_defense(p6, 1)
-p1.compare_defense(p6, 1)
-p7.compare_defense(p5, 1)
-p6.compare_defense(p3, 1)
-p5.compare_defense(p6, 1)
-p3.compare_defense(p3, 1)
-p4.compare_defense(p1, 1)
-p6.compare_defense(p5, 1)
-p6.compare_defense(p2, 1)
-p2.compare_defense(p4, 1)
-p1.compare_defense(p1, 1)
-p7.compare_defense(p2, 1)
-p4.compare_defense(p1, 1)
-p5.compare_defense(p4, 1)
-p2.compare_defense(p6, 1)
-p1.compare_defense(p2, 1)
-p6.compare_defense(p3, 1)
-p6.compare_defense(p7, 1)
-p2.compare_defense(p2, 1)
-p6.compare_defense(p7, 1)
-p3.compare_defense(p5, 1)
-p4.compare_defense(p5, 1)
-p4.compare_defense(p7, 1)
-p7.compare_defense(p6, 1)
-p7.compare_defense(p4, 1)
-p7.compare_defense(p2, 1)
-p7.compare_defense(p4, 1)
-p3.compare_defense(p6, 1)
+all_players = [p1, p2, p3, p4, p5, p6, p7, p8,
+               p9, p10, p11, p12, p13, p14, p15, p16]
 
-print('new score p1(' + p1.name + '): ' + str(p1.defense))
-print('new score p2(' + p2.name + '): ' + str(p2.defense))
-print('new score p3(' + p3.name + '): ' + str(p3.defense))
-print('new score p4(' + p4.name + '): ' + str(p4.defense))
-print('new score p5(' + p5.name + '): ' + str(p5.defense))
-print('new score p6(' + p6.name + '): ' + str(p6.defense))
-print('new score p7(' + p7.name + '): ' + str(p7.defense))
+t1 = Team('t', [p1, p2, p3, p4, p5, p6, p7, p8])
+t2 = Team('t', [p9, p10, p11, p12, p13, p14, p15, p16])
 
-print('total: ' + str(p1.defense + p2.defense + p3.defense + p4.defense +
-                      p5.defense + p6.defense + p7.defense))
 
-# player
+def get_random_player():
+    index = floor(random() * len(all_players))
+    return all_players[index]
 
-# print (compare(1000, 1000, 1))
+
+def get_random_attribute():
+    index = floor(random() * len(Player.player_attributes))
+    return Player.player_attributes[index]
+
+
+def generate_random_game():
+    player1 = get_random_player()
+    player2 = get_random_player()
+
+    random_score = random()
+    # if (player1.name == 'Marcos'):
+    #     random_score = 1
+
+    # if (player2.name == 'Marcos'):
+    #     random_score = 0
+
+    if (player1 != player2):
+        player1.compare_attr(player2, get_random_attribute(), random_score)
+
+
+def generate_random_state():
+    for i in range(1, 1000):
+        generate_random_game()
+
+
+generate_random_state()
+
+
+for player in all_players:
+    player.print_score()
