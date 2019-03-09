@@ -8,8 +8,7 @@ def calculate_k(rating):
     return 16 if (rating > 2400) else (24 if (rating > 2100) else 32)
 
 
-# TODO: rename to update
-def compare(rating_a, rating_b, score):
+def calculate_new_rating(rating_a, rating_b, score):
     """ Return the new rating given a game between a player with rating _a
 and a player with rating_b with result equals score"""
     # print test
@@ -22,7 +21,7 @@ and a player with rating_b with result equals score"""
     return rating_a + k * (score - odd)
 
 
-def game(player1, player2, score):
-    reverseScore = abs(1 - score)
-    player1 = compare(player1, player2, score)
-    player2 = compare(player2, player1, reverseScore)
+# def game(player1, player2, score):
+#     reverseScore = abs(1 - score)
+#     player1 = calculate_new_rating(player1, player2, score)
+#     player2 = calculate_new_rating(player2, player1, reverseScore)

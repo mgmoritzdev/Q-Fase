@@ -1,4 +1,4 @@
-from elo import compare
+from elo import calculate_new_rating
 from math import floor
 from functools import reduce
 
@@ -8,37 +8,37 @@ class Player:
 person and it is composed by the elo rating of different skills.
 """
 
-    player_attributes = ['defense', 'attack',
-                         'creativity', 'team_play']
+    skills = ['defense', 'attack',
+              'creativity', 'team_play']
 
     def __init__(self, name):
         # Retrieve from persistent storage
         self.name = name
-        self.init_attributes()
+        self.init_skills()
 
-    def compare_attr(self, other, attr, score):
+    def update_skill_level(self, other, skill, score):
         """ Compare Elo rating of two players given the skill and score
 in the contest."""
 
         reverseScore = abs(1 - score)
-        s1 = getattr(self, attr)
-        s2 = getattr(other, attr)
-        setattr(self, attr, compare(s1, s2, score))
-        setattr(other, attr, compare(s2, s1, reverseScore))
+        s1 = getattr(self, skill)
+        s2 = getattr(other, skill)
+        setattr(self, skill, calculate_new_rating(s1, s2, score))
+        setattr(other, skill, calculate_new_rating(s2, s1, reverseScore))
 
-    def init_attributes(self):
-        for attr in self.player_attributes:
-            setattr(self, attr, 1000)
+    def init_skills(self):
+        for skill in self.skills:
+            setattr(self, skill, 1000)
 
     def get_average_score(self):
-        scores = map(lambda x: getattr(self, x), self.player_attributes)
-        return reduce(lambda x, y: x + y, scores) / len(self.player_attributes)
+        scores = map(lambda x: getattr(self, x), self.skills)
+        return reduce(lambda x, y: x + y, scores) / len(self.skills)
 
     def print_score(self):
         text = '{:10}'.format(self.name) + ' |'
-        for attr in self.player_attributes:
-            text += ' ' + attr + ': '
-            text += '{:>4}'.format(str(floor(getattr(self, attr))))
+        for skill in self.skills:
+            text += ' ' + skill + ': '
+            text += '{:>4}'.format(str(floor(getattr(self, skill))))
             text += ';'
         text += ' avg: '
         text += '{:>4}'.format(str(floor(self.get_average_score())))

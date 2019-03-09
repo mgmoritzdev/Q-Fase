@@ -1,3 +1,7 @@
+from functools import reduce
+from player import Player
+
+
 class Team:
     """A team is a set of players and is grouped to allow evaluation of player
 skills insid the group"""
@@ -5,14 +9,19 @@ skills insid the group"""
         self.name = name
         self.players = players
 
-    def assess_defense(self):
-        """Return the average defensive skills of the team as a whole."""
-        pass
+    def get_team_skill(self, skill):
+        """Return the average value of a given skill of the team as a whole."""
+        scores = map(lambda x: getattr(x, skill), self.players)
+        return reduce(lambda x, y: x + y, scores) / len(self.players)
 
-    def assess_attack(self):
-        """Return the average attacking skills of the team as a whole."""
-        pass
+    def print_all_skills(self):
+        print(self.name + ' skills:')
+        for skill in Player.skills:
+            self.print_skill(skill)
 
-    def assess_creativity(self):
-        """Return the average creativity skills of the team as a whole."""
+    def print_skill(self, skill):
+        print(skill + ': ' + str(self.get_team_skill(skill)))
+
+    def get_team_average_strenght(self):
+        """Return the average value of all skills of a team."""
         pass

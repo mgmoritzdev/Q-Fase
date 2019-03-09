@@ -1,4 +1,3 @@
-# from elo import compare
 from player import Player
 from team import Team
 from random import random
@@ -25,8 +24,8 @@ p16 = Player('Sandro')
 all_players = [p1, p2, p3, p4, p5, p6, p7, p8,
                p9, p10, p11, p12, p13, p14, p15, p16]
 
-t1 = Team('t', [p1, p2, p3, p4, p5, p6, p7, p8])
-t2 = Team('t', [p9, p10, p11, p12, p13, p14, p15, p16])
+t1 = Team('Team A', [p1, p2, p3, p4, p5, p6, p7, p8])
+t2 = Team('Team B', [p9, p10, p11, p12, p13, p14, p15, p16])
 
 
 def get_random_player():
@@ -34,9 +33,9 @@ def get_random_player():
     return all_players[index]
 
 
-def get_random_attribute():
-    index = floor(random() * len(Player.player_attributes))
-    return Player.player_attributes[index]
+def get_random_skills():
+    index = floor(random() * len(Player.skills))
+    return Player.skills[index]
 
 
 def generate_random_game():
@@ -44,23 +43,25 @@ def generate_random_game():
     player2 = get_random_player()
 
     random_score = random()
-    # if (player1.name == 'Marcos'):
-    #     random_score = 1
-
-    # if (player2.name == 'Marcos'):
-    #     random_score = 0
 
     if (player1 != player2):
-        player1.compare_attr(player2, get_random_attribute(), random_score)
+        player1.update_skill_level(player2, get_random_skills(), random_score)
+
+
+def make_team_strong(team):
+    for player in team.players:
+        for skill in player.skills:
+            currentValue = getattr(player, skill)
+            setattr(player, skill, currentValue + 1000)
 
 
 def generate_random_state():
+    make_team_strong(t1)
     for i in range(1, 1000):
         generate_random_game()
 
 
 generate_random_state()
 
-
-for player in all_players:
-    player.print_score()
+t1.print_all_skills()
+t2.print_all_skills()
