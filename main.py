@@ -2,6 +2,7 @@ from player import Player
 from team import Team
 from random import random
 from math import floor
+from shuffle import Shuffler
 
 
 p1 = Player('Marcos')
