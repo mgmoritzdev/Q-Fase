@@ -71,6 +71,24 @@ class SplitOddNumberOfPlayersInTwoTeamsTestCase(ShufflerData):
                          'Wrong number of players')
 
 
+class CalculateDistanceBetweenTwoEqualTeams(SimpleShufflerTestCase):
+    def runTest(self):
+        self.assertEqual(self.shuffler.calculate_diff(), 0, 'Wrong distance')
+
+
+class CalculateDistanceBetweenTwoDifferentTeams(SimpleShufflerTestCase):
+    def runTest(self):
+        team1 = self.shuffler.teams[0]
+        make_team_strong(team1, 1000)
+        self.assertNotEqual(self.shuffler.calculate_diff(), 0,
+                            'Wrong distance')
+
+
+class CalculateDistanceBetweenThreeTeams(ShufflerData):
+    def runTest(self):
+        pass
+
+
 def expected_players_by_team(number_of_players, number_of_teams):
     min_players_per_team = (floor(number_of_players / number_of_teams))
     expected_values = []
@@ -80,6 +98,13 @@ def expected_players_by_team(number_of_players, number_of_teams):
         expected_values.append(min_players_per_team + rest)
 
     return expected_values
+
+
+def make_team_strong(team, diff):
+    for player in team.players:
+        for skill in player.skills:
+            currentValue = getattr(player, skill)
+            setattr(player, skill, currentValue + diff)
 
 
 if __name__ == '__main__':

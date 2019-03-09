@@ -24,4 +24,7 @@ skills insid the group"""
 
     def get_team_average_strenght(self):
         """Return the average value of all skills of a team."""
-        pass
+        scores = []
+        for skill in Player.skills:
+            scores.append(self.get_team_skill(skill))
+        return reduce(lambda x, y: x + y, scores) / len(Player.skills)

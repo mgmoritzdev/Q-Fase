@@ -1,4 +1,4 @@
-# from player import Player
+from player import Player
 from team import Team
 from math import floor
 
@@ -20,11 +20,21 @@ to balance all the all the skills in both teams."""
         pass
 
     def calculate_diff(self):
-        pass
+        teams_skills = [[] for _ in range(self.number_of_teams)]
+        for t in range(self.number_of_teams):
+            for skill in Player.skills:
+                teams_skills[t].append(self.teams[t].get_team_skill(skill))
+
+        error = 0
+        for t1 in range(0, self.number_of_teams - 1):
+            for t2 in range(t1 + 1, self.number_of_teams):
+                for s in range(len(Player.skills)):
+                    error += calculate_error(teams_skills[t1][s],
+                                             teams_skills[t2][s])
+        return error
 
     def split_teams(self):
         number_of_players = len(self.players)
-        player_per_team = floor(len(self.players) / self.number_of_teams)
         teams = [[] for _ in range(self.number_of_teams)]
         for i in range(number_of_players):
             target_team = i % self.number_of_teams
@@ -34,4 +44,6 @@ to balance all the all the skills in both teams."""
         for i in range(self.number_of_teams):
             self.teams.append(Team('Team' + str(i), teams[i]))
 
-# return {'teamA': {}, 'teamB':{}}
+
+def calculate_error(v1, v2):
+    return (v1 - v2) ** 2
