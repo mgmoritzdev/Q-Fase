@@ -1,7 +1,7 @@
 import unittest
 import shuffle
-from player import Player
 from math import floor
+from player_data import get_players
 
 
 class ShufflerData(unittest.TestCase):
@@ -56,26 +56,19 @@ class SplitEvenNumberOfPlayersInThreeTeamsTestCase(ShufflerData):
                          'Wrong number of players')
 
 
-def get_players():
-    p1 = Player('Marcos')
-    p2 = Player('Maradona')
-    p3 = Player('Raoni')
-    p4 = Player('Renato')
-    p5 = Player('Álvaro')
-    p6 = Player('Caio')
-    p7 = Player('Daniel')
-    p8 = Player('Michael')
-    p9 = Player('Diogo')
-    p10 = Player('Marcelo')
-    p11 = Player('Junior')
-    p12 = Player('Silvio')
-    p13 = Player('Fernandes')
-    p14 = Player('Reinaldo')
-    p15 = Player('Adauto')
-    p16 = Player('Sandro')
-
-    return [p1, p2, p3, p4, p5, p6, p7, p8, p9,
-            p10, p11, p12, p13, p14, p15, p16]
+class SplitOddNumberOfPlayersInTwoTeamsTestCase(ShufflerData):
+    def runTest(self):
+        self.shuffler.number_of_teams = 2
+        self.shuffler.players = self.players[0:9]
+        self.shuffler.split_teams()
+        expected = expected_players_by_team(len(self.shuffler.players),
+                                            self.shuffler.number_of_teams)
+        team1 = self.shuffler.teams[0].players
+        team2 = self.shuffler.teams[1].players
+        self.assertEqual(len(team1), expected[0],
+                         'Wrong number of players')
+        self.assertEqual(len(team2), expected[1],
+                         'Wrong number of players')
 
 
 def expected_players_by_team(number_of_players, number_of_teams):
@@ -89,49 +82,5 @@ def expected_players_by_team(number_of_players, number_of_teams):
     return expected_values
 
 
-
 if __name__ == '__main__':
     unittest.main()
-
-
-# class FrameSpareBeforeExtraBallTestCase(SimpleFrameTestCase):
-#     def runTest(self):
-#         self.frame.throw(6)
-#         self.frame.throw(4)
-#         self.assertEqual(self.frame.points, 10, 'Wrong score')
-#         self.assertEqual(self.frame.extraBalls, 1, 'Wrong extra balls')
-
-
-# class FrameSpareAfterExtraBallTestCase(SimpleFrameTestCase):
-#     def runTest(self):
-#         self.frame.throw(6)
-#         self.frame.throw(4)
-#         self.frame.throw(3)  # accepted in favor of last frame
-#         self.frame.throw(7)  # ignored
-#         self.assertEqual(self.frame.points, 13, 'Wrong score')
-#         self.assertEqual(self.frame.extraBalls, 0, 'Wrong extra balls')
-
-
-# class FrameStrikeBeforeExtraBallsTestCase(SimpleFrameTestCase):
-#     def runTest(self):
-#         self.frame.throw(10)
-#         self.assertEqual(self.frame.points, 10, 'Wrong score')
-#         self.assertEqual(self.frame.extraBalls, 2, 'Wrong extra balls')
-
-
-# class FrameStrikeAfterFirstExtraBallTestCase(SimpleFrameTestCase):
-#     def runTest(self):
-#         self.frame.throw(10)
-#         self.frame.throw(10)
-#         self.assertEqual(self.frame.points, 20, 'Wrong score')
-#         self.assertEqual(self.frame.extraBalls, 1, 'Wrong extra balls')
-
-
-# class FrameStrikeAfterSecondExtraBallTestCase(SimpleFrameTestCase):
-#     def runTest(self):
-#         self.frame.throw(10)
-#         self.frame.throw(7)
-#         self.frame.throw(3)  # accepted in favor of last frame
-#         self.frame.throw(6)  # ignored
-#         self.assertEqual(self.frame.points, 20, 'Wrong score')
-#         self.assertEqual(self.frame.extraBalls, 0, 'Wrong extra balls')
