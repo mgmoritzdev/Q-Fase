@@ -33,6 +33,9 @@ to balance all the all the skills in both teams."""
             swap_array = [swap_effect_0, swap_effect_1, swap_effect_2]
             swap_index = swap_array.index(min(swap_array))
 
+            if (min(swap_array) > 0 and random() > 0.6):
+                continue
+
             if swap_index == 0:
                 swap_player(s0_t1, s0_t2, s0_p1_index, s0_p2_index)
             elif swap_index == 1:
